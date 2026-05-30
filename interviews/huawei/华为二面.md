@@ -1,0 +1,68 @@
+自我介绍
+
+项目介绍
+
+什么是协程？跟线程比较有什么区别？
+
+线程间切换的过程？
+
+讲讲页表的TLB？MMU？
+
+
+
+算法题：
+
+全排列的变种。
+
+全排列是不同的数字的排列，这个题是有重复的大写字母的全排列种数。
+
+比如：ABA有三种排列。
+
+数学方法怎么做：排列组合。
+
+
+
+```c++
+//
+// Created by FuNgaiKa on 2021/9/18.
+//
+
+#include <iostream>
+#include<vector>
+#include <cstring>
+using namespace std;
+int ans;
+void huisu(vector<int>& res,vector<int>& sign,int len,string tmp){
+    if(tmp.size()==len){
+        ans++;
+    }
+    for(int i=0;i<26;i++){
+        if(res[i]==0||res[i]==sign[i]){
+            continue;
+        }
+        else if(res[i]>sign[i]){
+            sign[i]++;
+            char c=res[i]+'A';
+            tmp+=c;
+            huisu(res,sign,len,tmp);
+            sign[i]--;
+            tmp.pop_back();
+        }
+    }
+}
+int main(){
+    ans=0;
+    string a;//
+    cin>>a;
+    int len=a.length();
+    vector<int> vec(26,0);
+    for(int i=0;i<26;i++){
+        vec[a[i]-'A']++;
+    }
+    vector<int> sign(26,0);
+    huisu(vec,sign,len,"");
+    cout<<ans<<endl;
+    return 0;
+}
+```
+

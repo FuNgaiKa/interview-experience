@@ -1,0 +1,80 @@
+自我介绍
+
+讲讲项目，遇到的困难，单元测试讲一讲
+
+非对称加密算法，中间人攻击，加密算法讲一讲。
+
+
+
+算法题：
+
+给出缓存首地址和长度，写出双向链表存储每个单元的地址、长度和偏移量所在的指针。（跟leetcode不一样，被面试官说不能一直用leetcode的思维）
+
+
+
+引用和指针的区别？
+
+指针的表示，和偏移量的关系。
+
+
+
+```c++
+#include <iostream>
+#include<vector>
+using namespace std;
+
+class list{
+    public:
+        int8_t* type;
+        int length;
+        int8_t* offset;
+        list *left;
+        list *right;
+        list():type(0),length(0),offset(0),left(nullptr),right(nullptr){}
+        list(int8_t* type1,int length1,int8_t* offset1):type(type1),length(length1),offset(offset1),left(nullptr),right(nullptr){}
+
+};
+list* head =new list(0,0,0);
+list* cur=head;
+
+int preproc(int8_t* bufferAddress,int bufferLength){
+    int8_t* type =bufferAddress;
+    int length=*(type+2);
+    int8_t* offset=type+4+length;
+
+    list* tmp=new list(type,length,offset);
+    tmp->left=cur;
+    cur->right=tmp;
+    cur=cur->right;
+
+    int8_t* end=bufferAddress+bufferLength;
+    while(offset<end){
+        type=offset+1;
+        length=*(type+2);
+        offset=type+4+length;
+
+        list* tmp=new list(type,length,offset);
+        tmp->left=cur;
+        cur->right=tmp;
+        cur=cur->right;
+    }
+    return 1;
+
+}
+int main() {
+    int len;
+    cin>>len;
+
+    for(int i=0;i<len;i++){
+        int8_t type= 3;
+
+    }
+    cur=head->right;
+    for(int i=0;i<len;i++){
+
+    }
+
+
+}
+```
+
